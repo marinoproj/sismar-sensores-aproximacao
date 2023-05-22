@@ -26,6 +26,38 @@
             }
         }
 
+        .header {
+            display: flex;
+            padding: 20px;
+        }
+
+        .header-actions {
+            justify-content: flex-end;
+            margin-left: auto;
+            margin-right: 0;
+            display: flex;
+        }
+
+        .header-name-product {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .header-img-margin {
+            margin-left: 15px;
+        }
+
+        img {
+            height: 30px;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background-color: #ededed;
+        }
+
     </style>
 
     <script type="text/javascript">
@@ -55,20 +87,34 @@
 
 <body>
 
+    <header class="header">
+
+        <div class="header-name-product">SISMAR</div>
+
+        <div class="header-actions">
+
+            <a th:href="@{/}">
+                <img th:src="@{/images/home.png}" />
+            </a>
+
+        </div>
+
+    </header>
+
     <div class="container">
         
         <div class="row">
         
-            <div class="col-md-6">
-                <div class="card" style="margin-top: 50px; margin-bottom: 50px;">
+            <div class="col-md-12">
+                <div class="card" style="margin-top: 30px;">
                     <h5 class="card-header">Monitor</h5>
                     <div class="card-body" id="logs" style="line-height: 30px; overflow-y: auto;">
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-6">
-                <div class="card" style="margin-top: 50px; margin-bottom: 50px;">
+            <div class="col-md-12">
+                <div class="card" style="margin-top: 20px; margin-bottom: 50px;">
                     <h5 class="card-header">Push</h5>
                     <div class="card-body" id="push" style="line-height: 30px; overflow-y: auto;">
                     </div>

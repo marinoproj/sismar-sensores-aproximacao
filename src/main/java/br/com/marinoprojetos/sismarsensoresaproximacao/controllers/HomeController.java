@@ -40,26 +40,6 @@ public class HomeController {
 	@Autowired
 	private ConfigService configService;
 	
-	@GetMapping("/")
-    public String home(Model model) {
-        
-		List<Sensor> sensors = sensorService.findAll();		
-		Config config = configService.getConfig();
-		config = config == null ? new Config() : config;
-				
-		sensors.forEach(sensor -> {
-			sensor.setIniciado(sensorReadService.isStarted(sensor));
-			sensor.setTotalBuffer(sensorDistanciaService.countByIdSensor(sensor.getId()));
-		});		
-		
-		model.addAttribute("sensors", sensors);
-		model.addAttribute("config", config);
-		model.addAttribute("logs", logService.getLog());	
-		
-        return "home";
-        
-    }
-	
 	@PostMapping("/delete")
 	public String delete(@ModelAttribute("sensorRemove") Sensor sensor) {		
 		sensorService.deleteById(sensor.getId());
@@ -118,5 +98,26 @@ public class HomeController {
 		return "redirect:/";
 		
 	}
+	
+	@GetMapping("/")
+    public String home2(Model model) {
+        		
+		List<Sensor> sensors = sensorService.findAll();		
+		Config config = configService.getConfig();
+		config = config == null ? new Config() : config;
+				
+		sensors.forEach(sensor -> {
+			sensor.setIniciado(sensorReadService.isStarted(sensor));
+			sensor.setTotalBuffer(sensorDistanciaService.countByIdSensor(sensor.getId()));
+		});		
+		
+		model.addAttribute("sensors", sensors);
+		model.addAttribute("config", config);
+		model.addAttribute("logs", logService.getLog());
+		model.addAttribute("sensorsNoExist", sensors.size() == 0);
+		
+        return "home";
+        
+    }
 	
 }

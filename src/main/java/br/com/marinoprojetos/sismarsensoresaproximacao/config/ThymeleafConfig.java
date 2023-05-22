@@ -12,9 +12,10 @@ public class ThymeleafConfig {
 	    ClassLoaderTemplateResolver secondaryTemplateResolver = new ClassLoaderTemplateResolver();
 	    secondaryTemplateResolver.setPrefix("templates/");
 	    secondaryTemplateResolver.setCharacterEncoding("UTF-8");
-	    secondaryTemplateResolver.setOrder(1);
+	    secondaryTemplateResolver.setOrder(1);	   	   	    
 	    secondaryTemplateResolver.setCheckExistence(true);
-	    secondaryTemplateResolver.setCacheable(false);	        
+	    secondaryTemplateResolver.setCacheable(false);	
+	    
 	    return secondaryTemplateResolver;
 	}
 

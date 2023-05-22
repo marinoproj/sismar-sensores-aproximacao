@@ -8,19 +8,67 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.2.1/css/bootstrap.min.css}" />
 
+    <style>
+        .header {
+            display: flex;
+            padding: 20px;
+        }
+
+        .header-actions {
+            justify-content: flex-end;
+            margin-left: auto;
+            margin-right: 0;
+            display: flex;
+        }
+
+        .header-name-product {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .header-img-margin {
+            margin-left: 15px;
+        }
+
+        img {
+            height: 30px;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background-color: #ededed;
+        }
+    </style>
+
 </head>
 
 <body>
 
-    <div class="container" style="padding-bottom: 50px;">
+    <header class="header">
 
-        <div class="row" style="margin-top: 50px;">
+        <div class="header-name-product">SISMAR</div>
+
+        <div class="header-actions">
+
+            <a th:href="@{/}">
+                <img th:src="@{/images/home.png}" />
+            </a>
+
+        </div>
+
+    </header>
+
+    <div class="container">
+
+        <div class="row" style="margin-top: 30px;">
             <h4 th:text="${sensor.id == null} ? 'Adicionar sensor' : 'Editar dados'"></h4>
         </div>
 
         <form method="POST" th:action="@{/sensor/save}" th:object="${sensor}"
             style="margin-top: 20px; margin-bottom: 50px;">
-            
+
             <div th:if="${#fields.hasErrors('global')}">
                 <div class="alert alert-danger col-sm-12">
                     <p th:each="err : ${#fields.errors('global')}" th:text="${err}" class="error"></p>
