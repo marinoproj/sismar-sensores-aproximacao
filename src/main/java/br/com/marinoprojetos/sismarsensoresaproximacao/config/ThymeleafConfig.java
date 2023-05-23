@@ -14,8 +14,7 @@ public class ThymeleafConfig {
 	    secondaryTemplateResolver.setCharacterEncoding("UTF-8");
 	    secondaryTemplateResolver.setOrder(1);	   	   	    
 	    secondaryTemplateResolver.setCheckExistence(true);
-	    secondaryTemplateResolver.setCacheable(false);	
-	    
+	    secondaryTemplateResolver.setCacheable(false);		    
 	    return secondaryTemplateResolver;
 	}
 

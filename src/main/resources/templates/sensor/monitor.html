@@ -65,17 +65,53 @@
         var parts = window.location.pathname.split("/");
         var id = parts[parts.length-1];
 
+        var logs = [];
+
+        var pushs = [];
+
         var socket = new SockJS('/websocket');
         stompClient = Stomp.over(socket);
         stompClient.connect({}, function (frame) {
             
             stompClient.subscribe('/topic/sensor/' + id + '/monitor', function (data) {
-                $("#logs").append("<span>" +  JSON.parse(data.body).dateTime + " - " + JSON.parse(data.body).message + "</span><br/>");
+                
+                if (logs.length >= 3){
+                    logs.pop(); // remove ultimo
+                }
+                
+                var obj = JSON.parse(data.body);
+
+                logs.unshift(obj); // adiciona no inicio
+
+                var showLogs = "";
+
+                logs.forEach(element => {
+                    showLogs += ("<span>" +  element.dateTime + " - " + element.message + "</span><br/>");
+                });
+
+                $("#logs").html(showLogs);
                 $("#logs").scrollTop($("#logs")[0].scrollHeight);
+
             });
 
             stompClient.subscribe('/topic/sensor/' + id + '/push', function (data) {
-                $("#push").append("<span>" + JSON.parse(data.body).dateTime + " - " + JSON.parse(data.body).message + "</span><br/>");
+                
+                if (pushs.length >= 3){
+                    pushs.pop(); // remove ultimo
+                }
+                
+                var obj = JSON.parse(data.body);
+
+                pushs.unshift(obj); // adiciona no inicio
+
+                var showPushs = "";
+
+                pushs.forEach(element => {
+                    showPushs += ("<span>" +  element.dateTime + " - " + element.message + "</span><br/>");
+                });
+                
+                
+                $("#push").html(showPushs);
                 $("#push").scrollTop($("#push")[0].scrollHeight);
             });
 
