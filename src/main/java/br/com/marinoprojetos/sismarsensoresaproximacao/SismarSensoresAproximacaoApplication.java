@@ -13,7 +13,21 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class SismarSensoresAproximacaoApplication{
 
 	public static void main(String[] args) {
+
+		System.out.println("testeee");
+		try {
+
+			String os = System.getProperty("os.name").toLowerCase();
+
+			if (os.contains("nix") || os.contains("nux")) {
+				Runtime.getRuntime().exec("pkill firefox");
+				Runtime.getRuntime().exec("firefox -new-instance --kiosk file:///home/pi/startup.html");
+			}
+
+		} catch (Exception ex) {}
+
 		SpringApplication.run(SismarSensoresAproximacaoApplication.class, args);
+
 	}
 
 }

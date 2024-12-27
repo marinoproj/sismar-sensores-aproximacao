@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loading</title>
+  <style>
+    /* Fundo da página */
+    body {
+      background-color: #ffffff;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+      color: #000;
+    }
+
+    /* Centralização do conteúdo */
+    .container {
+      text-align: center;
+    }
+
+    /* Estilos e animação do loading */
+    .loader {
+      border: 8px solid #f3f3f3;
+      border-top: 8px solid #3498db;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Texto abaixo do loading */
+    .message {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="loader"></div>
+    <div class="message">Aguarde, inicializando o sistema ...</div>
+  </div>
+
+  <script>
+
+    const targetUrl = "http://localhost:5000";
+
+    const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+    // Função para checar disponibilidade da página
+    async function checkPageAvailability() {
+      try {
+        const response = await fetch(targetUrl, {
+          method: 'GET', // Mudamos para GET para verificar o conteúdo
+          cache: 'no-cache' // Evita cache para ter sempre resposta atualizada
+        });
+
+        // Verifica se a resposta é bem-sucedida (status 200-299)
+        if (response.ok) {
+          // Tenta acessar o conteúdo da página
+          const content = await response.text();
+
+          // Verifica se o conteúdo existe e tem um tamanho mínimo
+          // Você pode ajustar esse valor conforme necessário
+          if (content && content.length > 100) {
+            clearInterval(interval);
+            console.log("aguardando 10 segundos ..");
+            await sleep(10000);    // Espera 2 segundos
+            window.location.replace(targetUrl);
+          } else {
+            console.log("Página encontrada, mas conteúdo ainda não está completo...");
+          }
+        } else {
+          console.log(`Página retornou status ${response.status}`);
+        }
+
+      } catch (error) {
+        console.log("A página ainda não está disponível, tentando novamente...");
+      }
+    }
+
+    // Executa a checagem a cada 2 segundos
+    const interval = setInterval(checkPageAvailability, 2000);
+
+  </script>
+</body>
+</html>

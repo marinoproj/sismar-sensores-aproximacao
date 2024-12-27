@@ -53,6 +53,7 @@
 
   <script>
 
+    // URL da página a ser verificada
     const targetUrl = "http://localhost:5000";
 
     const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
@@ -60,28 +61,14 @@
     // Função para checar disponibilidade da página
     async function checkPageAvailability() {
       try {
-        const response = await fetch(targetUrl, {
-          method: 'GET', // Mudamos para GET para verificar o conteúdo
-          cache: 'no-cache' // Evita cache para ter sempre resposta atualizada
-        });
+        const response = await fetch(targetUrl, { method: 'HEAD', mode: 'no-cors' });
 
-        // Verifica se a resposta é bem-sucedida (status 200-299)
-        if (response.ok) {
-          // Tenta acessar o conteúdo da página
-          const content = await response.text();
-
-          // Verifica se o conteúdo existe e tem um tamanho mínimo
-          // Você pode ajustar esse valor conforme necessário
-          if (content && content.length > 100) {
+        // Se a resposta for bem-sucedida, redireciona o usuário
+        if (response) {
             clearInterval(interval);
-            console.log("aguardando 10 segundos ..");
-            await sleep(10000);    // Espera 2 segundos
-            window.location.replace(targetUrl);
-          } else {
-            console.log("Página encontrada, mas conteúdo ainda não está completo...");
-          }
-        } else {
-          console.log(`Página retornou status ${response.status}`);
+            console.log("aguardando 15 segundos ..");
+            await sleep(15000);    // Espera 15 segundos
+            window.location.href = targetUrl;
         }
 
       } catch (error) {
@@ -89,7 +76,7 @@
       }
     }
 
-    // Executa a checagem a cada 2 segundos
+    // Executa a checagem a cada 1 segundo
     const interval = setInterval(checkPageAvailability, 2000);
 
   </script>
