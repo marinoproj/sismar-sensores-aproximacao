@@ -1,0 +1,12 @@
+[Unit]
+Description=Sismar Sensores
+[Service]
+User=root
+WorkingDirectory=/opt/sismar_sensores
+ExecStart=/opt/sismar_sensores/start
+SuccessExitStatus=143
+TimeoutStopSec=10
+Restart=on-failure
+RestartSec=5
+[Install]
+WantedBy=multi-user.target
