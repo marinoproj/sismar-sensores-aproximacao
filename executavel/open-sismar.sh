@@ -10,7 +10,7 @@ HEALTH_CHECK_URL="http://localhost:5000/actuator/health"
 TARGET_URL="http://localhost:5000"
 
 # Abrir a página de carregamento no navegador padrão
-xdg-open "$LOADING_PAGE" &
+firefox "$LOADING_PAGE" &
 
 # Verificar status de saúde a cada 2 segundos
 while true; do
@@ -19,7 +19,7 @@ while true; do
 
     # Se o status for UP, abrir a página de destino e sair do loop
     if [ "$STATUS" == "UP" ]; then
-        xdg-open "$TARGET_URL"
+        firefox "$TARGET_URL"
         break
     fi
 
