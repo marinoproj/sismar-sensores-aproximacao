@@ -12,17 +12,19 @@ TARGET_URL="http://localhost:5000"
 # Abrir a página de carregamento no navegador padrão
 firefox "$LOADING_PAGE" &
 
-# Verificar status de saúde a cada 2 segundos
-while true; do
-    # Fazer a requisição HTTP e capturar o status
-    STATUS=$(curl -s "$HEALTH_CHECK_URL" | jq -r '.status')
+# Verificar status de saúde
+(
+    while true; do
+        # Fazer a requisição HTTP e capturar o status
+        STATUS=$(curl -s "$HEALTH_CHECK_URL" | jq -r '.status')
 
-    # Se o status for UP, abrir a página de destino e sair do loop
-    if [ "$STATUS" == "UP" ]; then
-        firefox "$TARGET_URL"
-        break
-    fi
+        # Se o status for UP, abrir a página de destino na mesma aba e sair
+        if [ "$STATUS" == "UP" ]; then
+            firefox --new-tab "$TARGET_URL"
+            break
+        fi
 
-    # Aguardar 2 segundos antes da próxima verificação
-    sleep 2
-done
+        # Aguardar 2 segundos antes da próxima verificação
+        sleep 2
+    done
+) & disown
