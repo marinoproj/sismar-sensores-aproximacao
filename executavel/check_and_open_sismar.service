@@ -3,10 +3,13 @@ Description=Script para abrir o sismar
 After=network.target
 
 [Service]
-ExecStart=/opt/sismar_sensores/check_and_open_sismar.sh
+ExecStart=/opt/sismar_sensores/open-sismar.sh
 Restart=always
 User=pi
 Environment=DISPLAY=:0
+Environment=DBUS_SESSION_BUS_ADDRESS=unix:path=/run/dbus/system_bus_socket
+StandardOutput=journal
+StandardError=journal
 
 [Install]
 WantedBy=multi-user.target
