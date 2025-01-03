@@ -50,5 +50,35 @@
     <div class="loader"></div>
     <div class="message">Aguarde, inicializando o sistema ...</div>
   </div>
+
+  <script>
+
+    // URL da página a ser verificada
+    const targetUrl = "http://localhost:5000";
+
+    const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+    // Função para checar disponibilidade da página
+    async function checkPageAvailability() {
+      try {
+        const response = await fetch(targetUrl, { method: 'HEAD', mode: 'no-cors' });
+
+        // Se a resposta for bem-sucedida, redireciona o usuário
+        if (response) {
+            clearInterval(interval);
+            console.log("aguardando 15 segundos ..");
+            await sleep(15000);    // Espera 15 segundos
+            window.location.href = targetUrl;
+        }
+
+      } catch (error) {
+        console.log("A página ainda não está disponível, tentando novamente...");
+      }
+    }
+
+    // Executa a checagem a cada 1 segundo
+    const interval = setInterval(checkPageAvailability, 2000);
+
+  </script>
 </body>
 </html>

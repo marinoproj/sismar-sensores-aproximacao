@@ -12,6 +12,7 @@ TARGET_URL="http://localhost:5000"
 # Abrir a página de carregamento no navegador padrão
 firefox "$LOADING_PAGE" &
 
+# Verificar status de saúde
 (
     while true; do
         # Fazer a requisição HTTP e capturar o status
@@ -25,8 +26,8 @@ firefox "$LOADING_PAGE" &
             # Aguardar o Firefox fechar completamente
             sleep 1
 
-            # Abrir a página de destino na mesma aba
-            firefox --new-tab "$TARGET_URL"
+            # Abrir o Firefox com a página de destino, sem restaurar abas
+            firefox --new-instance --new-window "$TARGET_URL"
             break
         fi
 
