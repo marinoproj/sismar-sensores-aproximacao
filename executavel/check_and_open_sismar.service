@@ -1,0 +1,12 @@
+[Unit]
+Description=Script para abrir o sismar
+After=network.target
+
+[Service]
+ExecStart=/opt/sismar_sensores/check_and_open_sismar.sh
+Restart=always
+User=pi
+Environment=DISPLAY=:0
+
+[Install]
+WantedBy=multi-user.target
